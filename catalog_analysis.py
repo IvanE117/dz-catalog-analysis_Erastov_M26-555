@@ -192,6 +192,21 @@ def genres_only_in_one(movies_a, movies_b):
     return set_movies_a - set_movies_b
 
 
+# ----------------- Этап 8. Итераторы и генераторы ---------------------
+def iter_high_rated(movies, min_rating=8.0):
+    """Функция-генератор, которая через yield лениво отдает фильмы с рейтингом не ниже min_rating."""
+    for movie in movies:
+        if movie["rating"] >= min_rating:
+            yield movie
+
+
+def generator_example(movies):
+    return sum(movie["duration_min"] for movie in movies if movie["rating"] > 7)
+
+
+# ----------------- Этап 9. Итоговый отчет ---------------------
+def build_report(movies):
+    ...
 
 if __name__ == '__main__':
     # print(average_rating(movies))
@@ -215,6 +230,10 @@ if __name__ == '__main__':
     #print(actor_filmography(movies))
     # print(dict_comprehension(movies))
 
-    print(all_genres(movies))
-    print(common_actors(movies[0], movies[3]))
-    print(genres_only_in_one(movies[5:6], movies[:5]))
+    # print(all_genres(movies))
+    # print(common_actors(movies[0], movies[3]))
+    # print(genres_only_in_one(movies[5:6], movies[:5]))
+
+    for movie in iter_high_rated(movies):
+        print(format_report_line(movie))
+    print(generator_example(movies))

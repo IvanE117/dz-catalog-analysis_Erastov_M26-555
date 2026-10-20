@@ -110,19 +110,41 @@ def normalize_title(title):
 
 def make_slug(title):
     """
-    Функция, которая превращает нормализованное название в «слаг» вида the-quiet-algorithm.
+    Функция, которая превращает нормализованное название в «слаг» вида 
+    the-quiet-algorithm.
     """
     return title.lower().replace(" ", "-")
 
 
 def format_report_line(movie):
-    """Функция, возвращающая единую строку с описанием фильма"""
+    """Функция, возвращающая единую строку с описанием фильма."""
     return (
         f'"{movie["title"]}" ({movie["year"]}) — '
         f'{movie["rating"]}/10, '
         f'{duration_in_hours(movie["duration_min"])}, '
         f'жанры: {", ".join(sorted(movie["genres"]))}'
     )
+
+
+# ----------------- Этап 5. Списки ---------------------
+def sorted_movie_title_and_rating(movies):
+    title_and_rating = [[movie["title"], movie["rating"]] for movie in movies]
+    return sorted(title_and_rating, key=lambda movie: movie[1], reverse=True)
+
+
+def titles_sorted_by_rating(movies):
+    """Функция, возвращающая список названий фильмов, отсортированных по убыванию рейтинга."""
+    return [title for title, _ in sorted_movie_title_and_rating(movies)]
+
+
+def top_n_by_rating(movies, n=3):
+    """Функция, возвращающая список из n кортежей (title, rating) — топ по рейтингу."""
+    return [tuple(movie) for movie in sorted_movie_title_and_rating(movies)][:n]
+
+
+# ----------------- Этап 5. Списки ---------------------
+def count_by_genre(movies):
+    pass
 
 
 if __name__ == '__main__':
@@ -137,6 +159,9 @@ if __name__ == '__main__':
     # for_and_while_cycles(movies)
 
     # print(normalize_title("midnight in oslo"))
-    print(make_slug("Silent Hours"))
+    # print(make_slug("Silent Hours"))
     # print(format_report_line(movies[7]))
+
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies, n=3))
 

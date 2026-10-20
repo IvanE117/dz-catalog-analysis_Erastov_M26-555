@@ -133,7 +133,9 @@ def sorted_movie_title_and_rating(movies):
 
 
 def titles_sorted_by_rating(movies):
-    """Функция, возвращающая список названий фильмов, отсортированных по убыванию рейтинга."""
+    """
+    Функция, возвращающая список названий фильмов, отсортированных по убыванию рейтинга.
+    """
     return [title for title, _ in sorted_movie_title_and_rating(movies)]
 
 
@@ -142,11 +144,34 @@ def top_n_by_rating(movies, n=3):
     return [tuple(movie) for movie in sorted_movie_title_and_rating(movies)][:n]
 
 
-# ----------------- Этап 5. Списки ---------------------
+# ----------------- Этап 6. Словари ---------------------
 def count_by_genre(movies):
-    pass
+    """Функция, возвращающая словарь {жанр: количество фильмов}."""
+    all_genres_dict = dict()
+    for movie in movies:
+        for genre in movie.get("genres", []):
+            all_genres_dict[genre] = all_genres_dict.get(genre, 0) + 1
+    return all_genres_dict
 
 
+def actor_filmography(movies):
+    """Функция, возвращающая словарь {актер: [список названий фильмов]}."""
+    all_actors_dict = dict()
+    for movie in movies:
+        for actor in movie.get("actors", []):
+            if actor not in all_actors_dict:
+                all_actors_dict[actor] = []
+            all_actors_dict[actor].append(movie["title"])
+    return all_actors_dict
+
+
+def dict_comprehension(movies):
+    avrg = average_rating(movies)
+    return {movie["title"]: movie["rating"] for movie in movies if movie["rating"] > avrg}
+
+
+    # genres = [movie["genres"] for movie in movies]
+    # all_genres_dict = {genre: 0 for genre in set.union(*genres)}
 if __name__ == '__main__':
     # print(average_rating(movies))
     # print(catalog_age_stats(movies))
@@ -162,6 +187,9 @@ if __name__ == '__main__':
     # print(make_slug("Silent Hours"))
     # print(format_report_line(movies[7]))
 
-    print(titles_sorted_by_rating(movies))
-    print(top_n_by_rating(movies, n=3))
+    # print(titles_sorted_by_rating(movies))
+    # print(top_n_by_rating(movies, n=3))
 
+    #print(count_by_genre(movies))
+    #print(actor_filmography(movies))
+    print(dict_comprehension(movies))

@@ -166,12 +166,33 @@ def actor_filmography(movies):
 
 
 def dict_comprehension(movies):
+    """Функция, возвращающая словарь {title: rating} только для фильмов с рейтингом выше среднего."""
     avrg = average_rating(movies)
     return {movie["title"]: movie["rating"] for movie in movies if movie["rating"] > avrg}
 
 
-    # genres = [movie["genres"] for movie in movies]
-    # all_genres_dict = {genre: 0 for genre in set.union(*genres)}
+# ----------------- Этап 7. Множества ---------------------
+def all_genres(movies):
+    """Функция, возвращающая множество всех уникальных жанров каталога."""
+    result = set()
+    for movie in movies:
+        result.update(movie["genres"])
+    return result
+
+
+def common_actors(movie1, movie2):
+    """Функция, возвращающая множество актеров, снимавшихся в обоих фильмах."""
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    """Функция, которая возвращает жанры, встречающиеся в movies_a, но не встречающиеся в movies_b."""
+    set_movies_a = set.union(*[movie["genres"] for movie in movies_a])
+    set_movies_b = set.union(*[movie["genres"] for movie in movies_b])
+    return set_movies_a - set_movies_b
+
+
+
 if __name__ == '__main__':
     # print(average_rating(movies))
     # print(catalog_age_stats(movies))
@@ -192,4 +213,8 @@ if __name__ == '__main__':
 
     #print(count_by_genre(movies))
     #print(actor_filmography(movies))
-    print(dict_comprehension(movies))
+    # print(dict_comprehension(movies))
+
+    print(all_genres(movies))
+    print(common_actors(movies[0], movies[3]))
+    print(genres_only_in_one(movies[5:6], movies[:5]))

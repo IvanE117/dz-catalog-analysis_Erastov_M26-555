@@ -24,8 +24,8 @@ movies = [
 ]
 
 
-# ----------------- Этап 1. Разминка: переменные, числа, math -----------------
 
+# ----------------- Этап 1. Разминка: переменные, числа, math -----------------
 def average_rating(movies):
     """Функция возвращает среднюю оценку по каталогу"""
     ratings = [movie['rating'] for movie in movies]
@@ -51,7 +51,6 @@ def duration_in_hours(minutes):
 
 
 # ----------------- Этап 2. Условия и match -----------------
-
 def rating_tier(rating):
     """Функция, которая по оценке возвращает категорию."""
     if rating >= 9:
@@ -72,9 +71,8 @@ def decade_label(year):
         case _ if year < 2015:
             return "старые"
 
+
 # ----------------- Этап 3. Строки ---------------------
-
-
 def for_and_while_cycles(movies):
     """Демонстрация работы с for, while и управляющими конструкциями циклов."""
     for movie in movies:
@@ -105,6 +103,27 @@ def count_long_movies(movies, threshold=120):
 
 
 # ----------------- Этап 4. Циклы ---------------------
+def normalize_title(title):
+    """Функция, которая приводит строку к формату Title Case."""
+    return ' '.join([word[0].upper() + word[1:] for word in title.lower().split()])
+
+
+def make_slug(title):
+    """
+    Функция, которая превращает нормализованное название в «слаг» вида the-quiet-algorithm.
+    """
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    """Функция, возвращающая единую строку с описанием фильма"""
+    return (
+        f'"{movie["title"]}" ({movie["year"]}) — '
+        f'{movie["rating"]}/10, '
+        f'{duration_in_hours(movie["duration_min"])}, '
+        f'жанры: {", ".join(sorted(movie["genres"]))}'
+    )
+
 
 if __name__ == '__main__':
     # print(average_rating(movies))
@@ -114,5 +133,10 @@ if __name__ == '__main__':
     # print(rating_tier(10))
     # print(decade_label(2027))
 
-    count_long_movies(movies, threshold=120)
-    for_and_while_cycles(movies)
+    # count_long_movies(movies, threshold=120)
+    # for_and_while_cycles(movies)
+
+    # print(normalize_title("midnight in oslo"))
+    print(make_slug("Silent Hours"))
+    # print(format_report_line(movies[7]))
+

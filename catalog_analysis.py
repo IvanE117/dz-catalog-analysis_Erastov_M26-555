@@ -1,9 +1,8 @@
 import math
 
-
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
-     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
+     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]}, # noqa: E501
     {"title": "Kitchen Stories", "year": 2019, "genres": {"comedy", "drama"},
      "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "M. Ferguson"]},
     {"title": "silent hours", "year": 2016, "genres": {"thriller", "drama"},
@@ -54,28 +53,58 @@ def duration_in_hours(minutes):
 # ----------------- Этап 2. Условия и match -----------------
 
 def rating_tier(rating):
+    """Функция, которая по оценке возвращает категорию."""
     if rating >= 9:
         return "шедевр"
-    elif 7 <= rating <= 8.9:
+    elif 7 <= rating < 9:
         return "хорошо"
     else:
-        return "средне" if 5 <= rating <= 6.9 else "слабо"
+        return "средне" if 5 <= rating < 7 else "слабо"
 
 
 def decade_label(year):
+    """Функция, которая возвращает метку "новые", "недавние" или "старые"."""
     match year:
-        case y if y > 2020:
+        case _ if year > 2020:
             return "новые"
-        case y if 2015 <= y <= 2020:
+        case _ if 2015 <= year <= 2020:
             return "недавние"
-        case y if y < 2015:
+        case _ if year < 2015:
             return "старые"
 
-# ----------------- Этап 3. Циклы ---------------------
+# ----------------- Этап 3. Строки ---------------------
+
+
+def for_and_while_cycles(movies):
+    """Демонстрация работы с for, while и управляющими конструкциями циклов."""
+    for movie in movies:
+        if 'comedy' in movie['genres']:
+            continue
+        print(movie['title'])
+
+    i = 0
+    while i < len(movies):
+        if movies[i]["rating"] > 9:
+            print(movies[i]["title"])
+            break
+        i += 1
+    else:
+        print("Шедевров не найдено")
 
 
 def count_long_movies(movies, threshold=120):
-    pass
+    """
+    Функция, которая с накопительной переменной считает количество фильмов
+    длиннее threshold минут.
+    """
+    counter = 0
+    for movie in movies:
+        if movie['duration_min'] > threshold:
+            counter += 1
+    return counter
+
+
+# ----------------- Этап 4. Циклы ---------------------
 
 if __name__ == '__main__':
     # print(average_rating(movies))
@@ -84,3 +113,6 @@ if __name__ == '__main__':
 
     # print(rating_tier(10))
     # print(decade_label(2027))
+
+    count_long_movies(movies, threshold=120)
+    for_and_while_cycles(movies)

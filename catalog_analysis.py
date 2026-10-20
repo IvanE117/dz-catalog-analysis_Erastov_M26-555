@@ -25,7 +25,7 @@ movies = [
 ]
 
 
-# ----------------- Этап 1. Разминка: переменные, числа, math -------------------
+# ----------------- Этап 1. Разминка: переменные, числа, math -----------------
 
 def average_rating(movies):
     """Функция возвращает среднюю оценку по каталогу"""
@@ -51,7 +51,36 @@ def duration_in_hours(minutes):
     return f"{minutes // 60}ч {minutes % 60}м"
 
 
+# ----------------- Этап 2. Условия и match -----------------
+
+def rating_tier(rating):
+    if rating >= 9:
+        return "шедевр"
+    elif 7 <= rating <= 8.9:
+        return "хорошо"
+    else:
+        return "средне" if 5 <= rating <= 6.9 else "слабо"
+
+
+def decade_label(year):
+    match year:
+        case y if y > 2020:
+            return "новые"
+        case y if 2015 <= y <= 2020:
+            return "недавние"
+        case y if y < 2015:
+            return "старые"
+
+# ----------------- Этап 3. Циклы ---------------------
+
+
+def count_long_movies(movies, threshold=120):
+    pass
+
 if __name__ == '__main__':
-    print(average_rating(movies))
-    print(catalog_age_stats(movies))
-    print(duration_in_hours(156))
+    # print(average_rating(movies))
+    # print(catalog_age_stats(movies))
+    # print(duration_in_hours(156))
+
+    # print(rating_tier(10))
+    # print(decade_label(2027))
